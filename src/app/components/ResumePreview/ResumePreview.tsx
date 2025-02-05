@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useResumeStore } from '../../store/useResumeStore';
 import { Mail, Phone, MapPin, Globe, Linkedin, Share2 } from 'lucide-react';
 
@@ -10,8 +10,14 @@ interface ResumePreviewProps {
 }
 
 export function ResumePreview({ isSharedView, username }: ResumePreviewProps) {
-  const { data } = useResumeStore();
+  const { data, loadResumeByUsername } = useResumeStore();
   const { personalInfo, summary, workExperience, education, skills, certificates, languages } = data;
+
+  useEffect(() => {
+    if (isSharedView && username) {
+      loadResumeByUsername(username);
+    }
+  }, [isSharedView, username, loadResumeByUsername]);
 
   const downloadPDF = async () => {
     const element = document.getElementById('resume-preview');

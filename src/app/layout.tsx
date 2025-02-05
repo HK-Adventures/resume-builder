@@ -1,16 +1,10 @@
-'use client';
-
 import './globals.css';
-import { useEffect } from 'react';
-import { useResumeStore } from './store/useResumeStore';
+import { Providers } from './providers';
 
-function StoreInitializer() {
-  useEffect(() => {
-    useResumeStore.persist.rehydrate();
-  }, []);
-  
-  return null;
-}
+export const metadata = {
+  title: 'Resume Builder',
+  description: 'Create and share your professional resume',
+};
 
 export default function RootLayout({
   children,
@@ -19,9 +13,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
-        <StoreInitializer />
-        {children}
+      <body className="min-h-screen bg-gray-50">
+        <Providers>
+          <main className="container mx-auto px-4 py-8">
+            {children}
+          </main>
+        </Providers>
       </body>
     </html>
   );
